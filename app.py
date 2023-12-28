@@ -24,18 +24,21 @@ model = pickle.load(open('model.pkl', 'rb'))
 #  'Sensor-299',
 #  'Sensor-181']
 
-
+st.title('Audax Labs - Water Fault Detection')
 upload = st.file_uploader("Choose a file (.csv)")
 
 if upload is not None:
     df, has_col, error = preprocessing(upload)
     if(not error):
         if(has_col):
-            st.write(df.shape)
+            # st.write(df.shape)
             X = df.iloc[:, :-1]
-            Y = np.array(df.iloc[:, -1:])
-
+            Y = (df.iloc[:, -1:])
+            Y.replace((-1, 1), (0, 1), inplace=True)
             pred = model.predict(X)
+            df["Predictions"] = pred
+           
+            st.write(f"### Dataframe")
             st.write(df)
             st.write(f"Contains 'Good/Bad' Column: *{has_col}*")   
             
@@ -49,12 +52,11 @@ if upload is not None:
 
         else:
             X = df
-            pred=model.predict(X)
+            pred = model.predict(X)
+            df["Prediction"] = pred
+            result_csv = df.to_csv().encode("utf-8")
             
-            result = pd.DataFrame()
-            result["Prediction"] = pred
-            result_csv = result.to_csv().encode("utf-8")
-            
+            st.write(f"### Dataframe")
             st.write(df)
             st.download_button(
                 label="Download prediction as CSV",
@@ -63,5 +65,5 @@ if upload is not None:
                 mime='text/csv',
             )    
     else:
-        st.write("Your data did not contain all of the necessary features: ['Sensor-253', 'Sensor-177', 'Sensor-500', 'Sensor-366', 'Sensor-229', 'Sensor-213', 'Sensor-352', 'Sensor-186', 'Sensor-29', 'Sensor-478']")
+        st.write("Your data did not contain all of the necessary features: ['Sensor-57', 'Sensor-134', 'Sensor-76', 'Sensor-28', 'Sensor-164', 'Sensor-369', 'Sensor-108', 'Sensor-81', 'Sensor-449', 'Sensor-319']")
      
