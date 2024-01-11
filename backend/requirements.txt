@@ -1,0 +1,7 @@
+pandas
+numpy 
+flask
+scikit-learn==1.2.2
+requests
+xgboost
+imblearn
