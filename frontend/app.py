@@ -24,7 +24,7 @@ if uploaded_file is not None:
     st.write(f"### Dataframe")
     st.write(df)
     st.download_button(
-        label="Download prediction as CSV",
+        label=":green[Download prediction as CSV]",
         data=result_csv,
         file_name='prediction.csv',
         mime='text/csv',
