@@ -6,7 +6,7 @@ from imblearn.over_sampling import SMOTE
 
 #basically stuff in the preprocessing notebook
 def preprocessing(input):
-    df = input
+    df = pd.read_csv(input)
     
     #getting only the ones with Good/Bad columns filled in
     if "Good/Bad" in df.columns:
